@@ -189,7 +189,7 @@ var selectedKaijoOpcha=[];
 function setTheme(t){if(t==="light"){document.body.classList.add("light")}else{document.body.classList.remove("light")}localStorage.setItem("theme",t)}
 (function(){var t=localStorage.getItem("theme");if(t==="light")document.body.classList.add("light")})();
 function switchTab(id){
-var allTabs=["ai-dosen","buppan-dosen","ai-kengen","buppan-kengen","irai","kaijo"];
+var allTabs=["irai","kaijo","ai-dosen","buppan-dosen","ai-kengen","buppan-kengen"];
 document.querySelectorAll(".tab").forEach(function(t,i){
 if(allTabs[i]==="irai"){t.classList.remove("active");if(id==="irai"){t.classList.add("active")}t.style.background="var(--green)";t.style.color="#fff"}
 else if(allTabs[i]==="kaijo"){t.classList.remove("active");if(id==="kaijo"){t.classList.add("active")}t.style.background="var(--red)";t.style.color="#fff"}
