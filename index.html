@@ -21,7 +21,7 @@ body.light .theme-btn.dark-btn{background:#555;color:#fff}
 .tabs{display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap}
 .tab{padding:10px 20px;background:var(--card);border:1px solid var(--border);border-radius:8px;cursor:pointer;color:var(--text2);transition:all .3s;font-size:.9em;white-space:nowrap;display:inline-flex;align-items:center;justify-content:center;box-sizing:border-box;line-height:1.2;min-height:40px}
 .tab:hover{background:var(--hover)}
-.tab.active{background:#3b82f6;color:#fff;border-color:#3b82f6}.tab.red-tab{background:var(--red);color:#fff;border-color:var(--red)}
+.tab.active{background:#3b82f6;color:#fff;border-color:#3b82f6}.tab.red-tab{background:var(--red);color:#fff;border-color:var(--red)}.tab.is-pressed{border:2px solid #fff;box-shadow:inset 0 2px 8px rgba(0,0,0,.45);transform:translateY(1px);filter:brightness(.85)}
 .panel{display:none;background:var(--card);border-radius:12px;padding:25px;border:1px solid var(--border)}
 .panel.active{display:block}
 .panel-title{color:var(--green);font-size:1.2em;margin-bottom:8px;font-weight:bold}
@@ -191,8 +191,8 @@ function setTheme(t){if(t==="light"){document.body.classList.add("light")}else{d
 function switchTab(id){
 var allTabs=["irai","kaijo","ai-dosen","buppan-dosen","ai-kengen","buppan-kengen"];
 document.querySelectorAll(".tab").forEach(function(t,i){
-if(allTabs[i]==="irai"){t.classList.remove("active");if(id==="irai"){t.classList.add("active")}t.style.background="var(--green)";t.style.color="#fff"}
-else if(allTabs[i]==="kaijo"){t.classList.remove("active");if(id==="kaijo"){t.classList.add("active")}t.style.background="var(--red)";t.style.color="#fff"}
+if(allTabs[i]==="irai"){t.classList.remove("active");if(id==="irai"){t.classList.add("active");t.classList.add("is-pressed")}else{t.classList.remove("is-pressed")}t.style.background="var(--green)";t.style.color="#fff"}
+else if(allTabs[i]==="kaijo"){t.classList.remove("active");if(id==="kaijo"){t.classList.add("active");t.classList.add("is-pressed")}else{t.classList.remove("is-pressed")}t.style.background="var(--red)";t.style.color="#fff"}
 else{t.classList.toggle("active",allTabs[i]===id)}
 });
 document.querySelectorAll(".panel").forEach(function(p){p.classList.remove("active")});
