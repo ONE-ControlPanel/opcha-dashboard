@@ -334,7 +334,7 @@ return rows;
 function createOpchaButton(name,container,selArr){
 var btn=document.createElement("button");
 btn.className="opcha-btn";
-btn.textContent=name;
+var _d=document.createElement("textarea");_d.innerHTML=name;btn.textContent=_d.value;
 btn.onclick=function(){toggleOpcha(btn,name,selArr)};
 container.appendChild(btn);
 return btn;
