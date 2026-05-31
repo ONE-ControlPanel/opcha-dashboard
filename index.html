@@ -55,7 +55,7 @@ body.light .theme-btn.dark-btn{background:#555;color:#fff}
 .remove-line-btn:hover{opacity:.8}
 .add-line-btn{padding:8px 16px;background:transparent;border:1px dashed var(--green);border-radius:8px;color:var(--green);cursor:pointer;font-size:.85em;transition:all .3s;font-weight:bold;display:inline-flex;align-items:center;gap:4px}
 .add-line-btn:hover{background:var(--green);color:#fff;border-style:solid}
-.data-table{width:100%;border-collapse:collapse;margin-top:15px;font-size:.85em}
+.add-row-wrap{display:flex;justify-content:flex-end;margin-top:14px}.add-row-btn{padding:9px 20px;background:transparent;border:1px dashed var(--green);border-radius:8px;color:var(--green);cursor:pointer;font-size:.9em;font-weight:bold;transition:all .3s}.add-row-btn:hover{background:var(--green);color:#fff;border-style:solid}.data-table td .row-input{width:100%;min-width:90px;padding:6px 8px;background:var(--bg);border:1px solid var(--border);border-radius:6px;color:var(--text);font-size:.95em;outline:none}.data-table td .row-input:focus{border-color:var(--green)}.new-row td{background:rgba(29,185,84,.06)}.data-table{width:100%;border-collapse:collapse;margin-top:15px;font-size:.85em}
 .data-table th{background:var(--accent);padding:10px;text-align:left;border-bottom:2px solid var(--border);font-weight:600;white-space:nowrap}
 .data-table td{padding:10px;border-bottom:1px solid var(--border);vertical-align:top}
 .data-table tr:hover{background:var(--hover)}
@@ -198,11 +198,13 @@ body.light .theme-btn.dark-btn{background:#555;color:#fff}
 <div class="panel-title">AI&#12458;&#12503;&#12481;&#12515;&#27177;&#38480;&#31649;&#29702;</div>
 <div class="panel-desc">AI&#12458;&#12540;&#12503;&#12531;&#12481;&#12515;&#12483;&#12488;&#12398;&#27177;&#38480;&#20184;&#19982;&#29366;&#27841;&#12539;&#31649;&#29702;&#32773;&#12539;&#23566;&#32218;&#26377;&#28961;</div>
 <div id="table-ai-kengen" class="loading">&#12487;&#12540;&#12479;&#35501;&#12415;&#36796;&#12415;&#20013;...</div>
+<div class="add-row-wrap"><button class="add-row-btn" onclick="addKengenRow('ai-kengen')">&#65291; &#36861;&#21152;</button></div>
 </div>
 <div id="panel-buppan-kengen" class="panel">
 <div class="panel-title">&#29289;&#36009;&#12458;&#12503;&#12481;&#12515;&#27177;&#38480;&#31649;&#29702;</div>
 <div class="panel-desc">&#29289;&#36009;&#12458;&#12540;&#12503;&#12531;&#12481;&#12515;&#12483;&#12488;&#12398;&#27177;&#38480;&#20184;&#19982;&#29366;&#27841;&#12539;&#31649;&#29702;&#32773;&#12539;&#23566;&#32218;&#26377;&#28961;</div>
 <div id="table-buppan-kengen" class="loading">&#12487;&#12540;&#12479;&#35501;&#12415;&#36796;&#12415;&#20013;...</div>
+<div class="add-row-wrap"><button class="add-row-btn" onclick="addKengenRow('buppan-kengen')">&#65291; &#36861;&#21152;</button></div>
 </div>
 <div id="panel-irai" class="panel">
 <div class="panel-title">&#128221; &#31649;&#29702;&#32773;&#27177;&#38480;&#20184;&#19982;&#20381;&#38972;&#65288;Chatwork&#36890;&#30693;&#65289;</div>
@@ -275,7 +277,7 @@ body.light .theme-btn.dark-btn{background:#555;color:#fff}
 <script>
 var SHEET_ID="1I2Y0FST_BjkhQW3b4B35V0C9uZXE4KIIpvoEtOILP2Y";
 var GAS_URL="https://script.google.com/macros/s/AKfycbzOLy31e4n8cOtYBBXbixYAJzKAs50xp2_6eQW2d299agNLavK2MAaXj2pdEQrIoj2npw/exec";
-var SHEETS={"ai-dosen":{gid:"0",headers:["No.","&#23566;&#32218;&#21517;","&#12458;&#12503;&#12481;&#12515;&#21517;&#31216;","&#12458;&#12503;&#12481;&#12515;&#12522;&#12531;&#12463;"]},"buppan-dosen":{gid:"781201449",headers:["No.","&#23566;&#32218;&#21517;","&#12458;&#12503;&#12481;&#12515;&#21517;&#31216;","&#12458;&#12503;&#12481;&#12515;&#12522;&#12531;&#12463;"]},"ai-kengen":{gid:"638022198",headers:["No.","&#12458;&#12503;&#12481;&#12515;&#21517;&#31216;","&#31649;&#29702;&#32773;","&#31649;&#29702;&#32773;&#27177;&#38480;&#20184;&#19982;&#32773;","&#12458;&#12503;&#12481;&#12515;&#12522;&#12531;&#12463;","&#23566;&#32218;&#26377;&#28961;"]},"buppan-kengen":{gid:"1584463383",headers:["No.","&#12458;&#12503;&#12481;&#12515;&#21517;&#31216;","&#31649;&#29702;&#32773;","&#31649;&#29702;&#32773;&#27177;&#38480;&#20184;&#19982;&#32773;","&#12458;&#12503;&#12481;&#12515;&#12522;&#12531;&#12463;","&#23566;&#32218;&#26377;&#28961;"]}};
+var SHEETS={"ai-dosen":{gid:"0",headers:["No.","&#23566;&#32218;&#21517;","&#12458;&#12503;&#12481;&#12515;&#21517;&#31216;","&#12458;&#12503;&#12481;&#12515;&#12522;&#12531;&#12463;"]},"buppan-dosen":{gid:"781201449",headers:["No.","&#23566;&#32218;&#21517;","&#12458;&#12503;&#12481;&#12515;&#21517;&#31216;","&#12458;&#12503;&#12481;&#12515;&#12522;&#12531;&#12463;"]},"ai-kengen":{gid:"638022198",headers:["No.","&#12458;&#12503;&#12481;&#12515;&#21517;&#31216;","&#31649;&#29702;&#32773;","&#23550;&#35937;&#32773;&#21517;","&#31649;&#29702;&#32773;&#27177;&#38480;&#20184;&#19982;&#32773;","&#12458;&#12503;&#12481;&#12515;&#12522;&#12531;&#12463;","&#23566;&#32218;&#26377;&#28961;"]},"buppan-kengen":{gid:"1584463383",headers:["No.","&#12458;&#12503;&#12481;&#12515;&#21517;&#31216;","&#31649;&#29702;&#32773;","&#23550;&#35937;&#32773;&#21517;","&#31649;&#29702;&#32773;&#27177;&#38480;&#20184;&#19982;&#32773;","&#12458;&#12503;&#12481;&#12515;&#12522;&#12531;&#12463;","&#23566;&#32218;&#26377;&#28961;"]}};
 var AI_OPCHA=["AI&#12510;&#12493;&#12479;&#12452;&#12474;&#20465;&#27005;&#37096;","&#26376;100&#19975;&#12434;&#30446;&#25351;&#12377;&#21103;&#26989;&#22654;","&#21103;&#26989;&#22899;&#23376;&#12354;&#12388;&#12414;&#12428;&#65281;","&#12476;&#12525;&#12363;&#12425;&#12398;&#36039;&#29987;&#24418;&#25104;","AI&#12402;&#12429;&#12400;","AI&#12450;&#12501;&#12451;&#20840;&#20307;&#12464;&#12523;&#12540;&#12503;","&#12304;&#36939;&#21942;&#12305;AI&#12450;&#12501;&#12451;","AI ONE&#12513;&#12452;&#12531;&#12464;&#12523;&#12540;&#12503;"];
 var BUPPAN_OPCHA=["&#12495;&#12452;&#12502;&#12521;&#12531;&#12489;&#21368; &#20181;&#20837;&#12428;&#35500;&#26126;&#20250;","&#12414;&#12356;&#12395;&#12385;&#29289;&#36009;","&#12414;&#12356;&#12395;&#12385;&#29289;&#36009;&#12464;&#12523;&#12540;&#12503;","&#29289;&#36009;ONE&#12304;&#12495;&#12452;&#12502;&#12521;&#12531;&#12489;&#21368;&#12305;","&#29289;&#36009;&#12476;&#12511;&#38598;&#20013;&#35611;&#24231;&#12464;&#12523;&#12540;&#12503;LINE","&#12393;&#12371;&#12391;&#12418;&#29289;&#36009;","&#12304;&#22806;&#37096;&#27969;&#20986;&#21427;&#31105;&#12305;&#21033;&#30410;&#21830;&#21697;&#32057;&#20171;&#12464;&#12523;&#12540;&#12503;","&#29289;&#36009;ONE&#12304;&#12450;&#12497;&#12524;&#12523;&#37096;&#38272;&#12305;","&#29289;&#36009;ONE&#12304;zoom&#27770;&#36215;&#20250;&#12305;&#12464;&#12523;&#12540;&#12503; LINE","&#29289;&#36009;ONE&#12304;ebay&#37096;&#38272;&#12305;","&#12298;&#22823;&#36870;&#36578;&#12398;&#26292;&#38706;&#12299;1&#24180;&#12391;5,000&#19975;&#31292;&#12356;&#12384;&#31192;&#23494;","&#29289;&#36009;ONE&#12304;Amazon&#37096;&#38272;&#12305;&#20840;&#20307;LINE","&#12495;&#12452;&#12502;&#12521;&#12531;&#12489;&#21368; &#26997;&#31192;&#12464;&#12523;&#12540;&#12503;"];
 var selectedOpcha=[];
@@ -491,6 +493,22 @@ var t=document.getElementById("toast");
 t.textContent=msg;
 t.className="toast"+(type==="error"?" error":"")+" show";
 setTimeout(function(){t.classList.remove("show")},3000);
+}
+function addKengenRow(key){
+  var container=document.getElementById("table-"+key);
+  var table=container.querySelector("table.data-table");
+  if(!table){ if(!document.getElementById("panel-"+key).dataset.loaded){ loadSheet(key); showToast("\u5148\u306b\u8868\u3092\u8aad\u307f\u8fbc\u3093\u3067\u304b\u3089\u3001\u3082\u3046\u4e00\u5ea6\u300c\u8ffd\u52a0\u300d\u3092\u62bc\u3057\u3066\u304f\u3060\u3055\u3044"); } return; }
+  var tbody=table.querySelector("tbody");
+  if(!tbody) return;
+  var rowCount=tbody.querySelectorAll("tr").length;
+  var tr=document.createElement("tr");
+  tr.className="new-row";
+  var noTd=document.createElement("td"); noTd.textContent=(rowCount+1); tr.appendChild(noTd);
+  var fields=[{p:"\u30aa\u30d7\u30c1\u30e3\u540d\u79f0"},{p:"\u7ba1\u7406\u8005"},{p:"\u5bfe\u8c61\u8005\u540d"},{p:"\u7ba1\u7406\u8005\u6a29\u9650\u4ed8\u4e0e\u8005"},{p:"\u30aa\u30d7\u30c1\u30e3\u30ea\u30f3\u30af"}];
+  fields.forEach(function(f){ var td=document.createElement("td"); var inp=document.createElement("input"); inp.type="text"; inp.className="row-input"; inp.placeholder=f.p; td.appendChild(inp); tr.appendChild(td); });
+  var dTd=document.createElement("td"); var sel=document.createElement("select"); sel.className="row-input"; ["\u25CB","\u2014"].forEach(function(o){ var op=document.createElement("option"); op.value=o; op.textContent=o; sel.appendChild(op); }); dTd.appendChild(sel); tr.appendChild(dTd);
+  tbody.appendChild(tr);
+  tr.querySelector("input").focus();
 }
 renderOpchaButtons();
 loadSheet("ai-dosen");
