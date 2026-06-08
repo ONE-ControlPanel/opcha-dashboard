@@ -94,8 +94,7 @@ body.light .theme-btn.dark-btn{background:#555;color:#fff}
 <!-- Firebase SDK -->
 <script type="module">
   import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
-  import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
-
+    import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged, sendPasswordResetEmail } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
   const firebaseConfig = {
     apiKey: "AIzaSyDyQZCfJC_JXYeQ0tY5z3Z-pA_DTogIjl4",
         authDomain: "opcha-dashboard.firebaseapp.com",
@@ -142,7 +141,7 @@ body.light .theme-btn.dark-btn{background:#555;color:#fff}
       btn.textContent = 'Login';
     }
   };
-
+window.doPasswordReset = async function() { const email = document.getElementById('login-email').value.trim(); const errEl = document.getElementById('login-error'); if (!email) { errEl.textContent = 'メールアドレスを入力してください'; return; } try { await sendPasswordResetEmail(auth, email); errEl.style.color = 'var(--green)'; errEl.textContent = 'パスワード再設定メールを送信しました'; } catch (e) { errEl.style.color = ''; errEl.textContent = 'メール送信に失敗しました'; } };
   window.doLogout = async function() {
     await signOut(auth);
   };
@@ -163,6 +162,7 @@ body.light .theme-btn.dark-btn{background:#555;color:#fff}
     <input type="password" id="login-password" class="login-input" placeholder="&#12497;&#12473;&#12527;&#12540;&#12489;&#12434;&#20837;&#21147;" onkeydown="handleLoginKeydown(event)">
     <button id="login-btn" class="login-btn" onclick="doLogin()">Login</button>
     <div id="login-error" class="login-error"></div>
+    <div style="text-align:center;margin-top:12px;"><a href="#" id="forgot-link" onclick="doPasswordReset();return false;" style="color:var(--accent);font-size:.85em;text-decoration:none;">パスワードをお忘れですか？</a></div>
   </div>
 </div>
 <div id="app-screen">
