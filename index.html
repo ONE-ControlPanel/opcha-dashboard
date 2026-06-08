@@ -162,7 +162,8 @@ window.doPasswordReset = async function() { const email = document.getElementByI
     <input type="password" id="login-password" class="login-input" placeholder="&#12497;&#12473;&#12527;&#12540;&#12489;&#12434;&#20837;&#21147;" onkeydown="handleLoginKeydown(event)">
     <button id="login-btn" class="login-btn" onclick="doLogin()">Login</button>
     <div id="login-error" class="login-error"></div>
-        <div style="text-align:center;margin-top:12px;"><a href="#" id="forgot-link" onclick="doPasswordReset();return false;" style="color:#fff;font-size:.85em;text-decoration:none;">パスワードをお忘れですか？</a></div>  </div>
+        <div style="text-align:center;margin-top:12px;"><a href="#" id="forgot-link" onclick="doPasswordReset();return false;" style="color:#fff;font-size:.85em;text-decoration:none;">パスワードをお忘れですか？</a></div>
+  <div style="text-align:center;margin-top:8px;font-size:.75em;color:var(--text2);line-height:1.5;">メールが届かない場合は迷惑メールフォルダをご確認ください</div>
 </div>
 <div id="app-screen">
 <div class="container">
