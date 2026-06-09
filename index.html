@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>&#12458;&#12503;&#12481;&#12515;&#215;&#23566;&#32218; &#31649;&#29702;&#12471;&#12540;&#12488;</title>
+<title>オプチャ×導線 管理シート</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 :root{--bg:#1a1a2e;--card:#16213e;--accent:#0f3460;--green:#1db954;--text:#e0e0e0;--text2:#aaa;--border:#2a2a4a;--hover:#1e3a5f;--white-bg:#f5f5f5;--white-card:#fff;--white-text:#333;--white-text2:#666;--white-border:#ddd;--white-accent:#e8e8e8;--red:#e74c3c}
@@ -154,12 +154,12 @@ window.doPasswordReset = async function() { const email = document.getElementByI
 <body>
 <div id="login-screen">
   <div class="login-card">
-    <div class="login-title">&#128203; &#12458;&#12503;&#12481;&#12515;&#215;&#23566;&#32218; &#31649;&#29702;&#12471;&#12540;&#12488;</div>
-    <div class="login-subtitle">&#12525;&#12464;&#12452;&#12531;&#12375;&#12390;&#12367;&#12384;&#12373;&#12356;</div>
-    <label class="login-label">&#12513;&#12540;&#12523;&#12450;&#12489;&#12524;&#12473;</label>
+    <div class="login-title">📋 オプチャ×導線 管理シート</div>
+    <div class="login-subtitle">ログインしてください</div>
+    <label class="login-label">メールアドレス</label>
     <input type="email" id="login-email" class="login-input" placeholder="example@email.com" onkeydown="handleLoginKeydown(event)">
-    <label class="login-label">&#12497;&#12473;&#12527;&#12540;&#12489;</label>
-    <input type="password" id="login-password" class="login-input" placeholder="&#12497;&#12473;&#12527;&#12540;&#12489;&#12434;&#20837;&#21147;" onkeydown="handleLoginKeydown(event)">
+    <label class="login-label">パスワード</label>
+    <input type="password" id="login-password" class="login-input" placeholder="パスワードを入力" onkeydown="handleLoginKeydown(event)">
     <button id="login-btn" class="login-btn" onclick="doLogin()">Login</button>
     <div id="login-error" class="login-error"></div>
         <div style="text-align:center;margin-top:12px;"><a href="#" id="forgot-link" onclick="doPasswordReset();return false;" style="color:#fff;font-size:.85em;text-decoration:none;">パスワードをお忘れですか？</a></div>
@@ -169,119 +169,119 @@ window.doPasswordReset = async function() { const email = document.getElementByI
 <div id="app-screen">
 <div class="container">
 <div class="header">
-<h1>&#128203; &#12458;&#12503;&#12481;&#12515;&#215;&#23566;&#32218; &#31649;&#29702;&#12471;&#12540;&#12488;</h1>
+<h1>📋 オプチャ×導線 管理シート</h1>
 <div class="header-right"><span class="user-info" id="user-email" style="display:none"></span><div class="theme-toggle">
-<button class="theme-btn light-btn" onclick="setTheme('light')">&#9728;&#65039; &#12507;&#12527;&#12452;&#12488;</button>
-<button class="theme-btn dark-btn" onclick="setTheme('dark')">&#127769; &#12502;&#12521;&#12483;&#12463;</button>
+<button class="theme-btn light-btn" onclick="setTheme('light')">☀️ ホワイト</button>
+<button class="theme-btn dark-btn" onclick="setTheme('dark')">🌙 ブラック</button>
 </div>
 <button class="logout-btn" onclick="doLogout()">Logout</button>
 </div>
 </div>
 <div class="tabs">
-<div class="tab" onclick="switchTab('irai')" style="background:var(--green);color:#fff">&#128221; &#27177;&#38480;&#20184;&#19982;&#20381;&#38972;</div>
-<div class="tab" onclick="switchTab('kaijo')" style="background:var(--red);color:#fff">&#128465; &#27177;&#38480;&#35299;&#38500;&#20381;&#38972;</div>
-<div class="tab active" onclick="switchTab('ai-dosen')">AI&#12458;&#12503;&#12481;&#12515;&#23566;&#32218;</div>
-<div class="tab" onclick="switchTab('buppan-dosen')">&#29289;&#36009;&#12458;&#12503;&#12481;&#12515;&#23566;&#32218;</div>
-<div class="tab" onclick="switchTab('ai-kengen')">AI&#12458;&#12503;&#12481;&#12515;&#27177;&#38480;</div>
-<div class="tab" onclick="switchTab('buppan-kengen')">&#29289;&#36009;&#12458;&#12503;&#12481;&#12515;&#27177;&#38480;</div>
+<div class="tab" onclick="switchTab('irai')" style="background:var(--green);color:#fff">📝 権限付与依頼</div>
+<div class="tab" onclick="switchTab('kaijo')" style="background:var(--red);color:#fff">🗑 権限解除依頼</div>
+<div class="tab active" onclick="switchTab('ai-dosen')">AIオプチャ導線</div>
+<div class="tab" onclick="switchTab('buppan-dosen')">物販オプチャ導線</div>
+<div class="tab" onclick="switchTab('ai-kengen')">AIオプチャ権限</div>
+<div class="tab" onclick="switchTab('buppan-kengen')">物販オプチャ権限</div>
 </div>
 <div id="panel-ai-dosen" class="panel active">
-<div class="panel-title">AI &#12458;&#12503;&#12481;&#12515;&#23566;&#32218;&#19968;&#35239;</div>
-<div class="panel-desc">AI&#12458;&#12540;&#12503;&#12531;&#12481;&#12515;&#12483;&#12488;&#12398;&#23566;&#32218;&#21517;&#12539;&#12458;&#12503;&#12481;&#12515;&#21517;&#31216;&#12539;&#12522;&#12531;&#12463;&#24773;&#22577;</div>
-<div id="table-ai-dosen" class="loading">&#12487;&#12540;&#12479;&#35501;&#12415;&#36796;&#12415;&#20013;...</div>
+<div class="panel-title">AI オプチャ導線一覧</div>
+<div class="panel-desc">AIオープンチャットの導線名・オプチャ名称・リンク情報</div>
+<div id="table-ai-dosen" class="loading">データ読み込み中...</div>
 </div>
 <div id="panel-buppan-dosen" class="panel">
-<div class="panel-title">&#29289;&#36009;&#12458;&#12503;&#12481;&#12515;&#23566;&#32218;&#19968;&#35239;</div>
-<div class="panel-desc">&#29289;&#36009;&#12458;&#12540;&#12503;&#12531;&#12481;&#12515;&#12483;&#12488;&#12398;&#23566;&#32218;&#21517;&#12539;&#12458;&#12503;&#12481;&#12515;&#21517;&#31216;&#12539;&#12522;&#12531;&#12463;&#24773;&#22577;</div>
-<div id="table-buppan-dosen" class="loading">&#12487;&#12540;&#12479;&#35501;&#12415;&#36796;&#12415;&#20013;...</div>
+<div class="panel-title">物販オプチャ導線一覧</div>
+<div class="panel-desc">物販オープンチャットの導線名・オプチャ名称・リンク情報</div>
+<div id="table-buppan-dosen" class="loading">データ読み込み中...</div>
 </div>
 <div id="panel-ai-kengen" class="panel">
-<div class="panel-title">AI&#12458;&#12503;&#12481;&#12515;&#27177;&#38480;&#31649;&#29702;</div>
-<div class="panel-desc">AI&#12458;&#12540;&#12503;&#12531;&#12481;&#12515;&#12483;&#12488;&#12398;&#27177;&#38480;&#20184;&#19982;&#29366;&#27841;&#12539;&#31649;&#29702;&#32773;&#12539;&#23566;&#32218;&#26377;&#28961;</div>
-<div id="table-ai-kengen" class="loading">&#12487;&#12540;&#12479;&#35501;&#12415;&#36796;&#12415;&#20013;...</div>
-<div class="add-row-wrap"><button class="add-row-btn" onclick="addKengenRow('ai-kengen')">&#65291; &#36861;&#21152;</button></div>
+<div class="panel-title">AIオプチャ権限管理</div>
+<div class="panel-desc">AIオープンチャットの権限付与状況・管理者・導線有無</div>
+<div id="table-ai-kengen" class="loading">データ読み込み中...</div>
+<div class="add-row-wrap"><button class="add-row-btn" onclick="addKengenRow('ai-kengen')">＋ 追加</button></div>
 </div>
 <div id="panel-buppan-kengen" class="panel">
-<div class="panel-title">&#29289;&#36009;&#12458;&#12503;&#12481;&#12515;&#27177;&#38480;&#31649;&#29702;</div>
-<div class="panel-desc">&#29289;&#36009;&#12458;&#12540;&#12503;&#12531;&#12481;&#12515;&#12483;&#12488;&#12398;&#27177;&#38480;&#20184;&#19982;&#29366;&#27841;&#12539;&#31649;&#29702;&#32773;&#12539;&#23566;&#32218;&#26377;&#28961;</div>
-<div id="table-buppan-kengen" class="loading">&#12487;&#12540;&#12479;&#35501;&#12415;&#36796;&#12415;&#20013;...</div>
-<div class="add-row-wrap"><button class="add-row-btn" onclick="addKengenRow('buppan-kengen')">&#65291; &#36861;&#21152;</button></div>
+<div class="panel-title">物販オプチャ権限管理</div>
+<div class="panel-desc">物販オープンチャットの権限付与状況・管理者・導線有無</div>
+<div id="table-buppan-kengen" class="loading">データ読み込み中...</div>
+<div class="add-row-wrap"><button class="add-row-btn" onclick="addKengenRow('buppan-kengen')">＋ 追加</button></div>
 </div>
 <div id="panel-irai" class="panel">
-<div class="panel-title">&#128221; &#31649;&#29702;&#32773;&#27177;&#38480;&#20184;&#19982;&#20381;&#38972;&#65288;Chatwork&#36890;&#30693;&#65289;</div>
-<div class="panel-desc">LINE&#21517;&#12392;&#12458;&#12503;&#12481;&#12515;&#12434;&#36984;&#25246;&#12375;&#12390;&#12300;&#20381;&#38972;&#36865;&#20449;&#12301;&#12434;&#25276;&#12377;&#12392;&#12289;Chatwork&#12395;&#25351;&#23450;&#12501;&#12457;&#12540;&#12510;&#12483;&#12488;&#12391;&#36890;&#30693;&#12364;&#36865;&#20449;&#12373;&#12428;&#12414;&#12377;&#12290;</div>
+<div class="panel-title">📝 管理者権限付与依頼（Chatwork通知）</div>
+<div class="panel-desc">LINE名とオプチャを選択して「依頼送信」を押すと、Chatworkに指定フォーマットで通知が送信されます。</div>
 <div class="form-group">
-<label>&#20381;&#38972;&#20154;</label>
-<input type="text" id="requester" class="form-input" placeholder="&#20381;&#38972;&#20154;&#21517;&#12434;&#20837;&#21147;&#65288;&#20363;&#65306;&#23665;&#30000;&#12373;&#12435;&#65289;">
+<label>依頼人</label>
+<input type="text" id="requester" class="form-input" placeholder="依頼人名を入力（例：山田さん）">
 </div>
 <div class="form-group">
-<label>LINE&#21517;&#65288;&#35079;&#25968;&#20154;&#20837;&#21147;&#21487;&#65289;</label>
+<label>LINE名（複数人入力可）</label>
 <div class="line-name-list" id="iraiLineList">
 <div class="line-name-row">
-<input type="text" class="form-input irai-line-input" placeholder="LINE&#21517;&#12434;&#20837;&#21147;">
+<input type="text" class="form-input irai-line-input" placeholder="LINE名を入力">
 </div>
 </div>
-<button class="add-line-btn" onclick="addIraiLine()">&#65291; &#36861;&#21152;</button>
+<button class="add-line-btn" onclick="addIraiLine()">＋ 追加</button>
 </div>
 <div class="form-group">
-<label>&#12458;&#12503;&#12481;&#12515;&#21517;&#65288;&#35079;&#25968;&#36984;&#25246;&#21487;&#12539;&#20877;&#12463;&#12522;&#12483;&#12463;&#12391;&#35299;&#38500;&#65289;</label>
+<label>オプチャ名（複数選択可・再クリックで解除）</label>
 <div class="opcha-section">
-<div class="opcha-section-title">&#128230; AI&#12458;&#12503;&#12481;&#12515;</div>
+<div class="opcha-section-title">📦 AIオプチャ</div>
 <div class="opcha-buttons" id="ai-opcha-btns"></div>
 </div>
 <div class="opcha-section">
-<div class="opcha-section-title">&#128230; &#29289;&#36009;&#12458;&#12503;&#12481;&#12515;</div>
+<div class="opcha-section-title">📦 物販オプチャ</div>
 <div class="opcha-buttons" id="buppan-opcha-btns"></div>
 </div>
 </div>
 <div class="form-group">
-<label>&#35036;&#36275;&#65288;&#26399;&#26085;&#12398;&#35352;&#36617;&#12418;&#12362;&#39000;&#12356;&#12375;&#12414;&#12377;&#65289;</label>
-<textarea id="iraiNote" class="form-textarea" placeholder="&#20633;&#32771;&#12364;&#12354;&#12428;&#12400;&#20837;&#21147;&#12375;&#12390;&#12367;&#12384;&#12373;&#12356;"></textarea>
+<label>補足（期日の記載もお願いします）</label>
+<textarea id="iraiNote" class="form-textarea" placeholder="備考があれば入力してください"></textarea>
 </div>
   <div class="form-group" style="font-size:13px;line-height:1.7;color:#888;margin-top:-4px;">※当日依頼の20時までであれば当日対応<br>※当日依頼の20時過ぎの場合は別対応</div>
-<button class="submit-btn" onclick="submitRequest()" id="submitBtn">&#128238; &#20381;&#38972;&#36865;&#20449;&#65288;&#65291;Chatwork&#36890;&#30693;&#65289;</button>
+<button class="submit-btn" onclick="submitRequest()" id="submitBtn">📮 依頼送信（＋Chatwork通知）</button>
 </div>
 <div id="panel-kaijo" class="panel">
-<div class="panel-title red">&#128465; &#31649;&#29702;&#32773;&#27177;&#38480;&#35299;&#38500;&#20381;&#38972;&#65288;Chatwork&#36890;&#30693;&#65289;</div>
-<div class="panel-desc">LINE&#21517;&#12392;&#12458;&#12503;&#12481;&#12515;&#12434;&#36984;&#25246;&#12375;&#12390;&#12300;&#35299;&#38500;&#20381;&#38972;&#36865;&#20449;&#12301;&#12434;&#25276;&#12377;&#12392;&#12289;Chatwork&#12395;&#36890;&#30693;&#12364;&#36865;&#20449;&#12373;&#12428;&#12414;&#12377;&#12290;</div>
+<div class="panel-title red">🗑 管理者権限解除依頼（Chatwork通知）</div>
+<div class="panel-desc">LINE名とオプチャを選択して「解除依頼送信」を押すと、Chatworkに通知が送信されます。</div>
 <div class="form-group">
-<label>&#20381;&#38972;&#20154;</label>
-<input type="text" id="kaijoRequester" class="form-input" placeholder="&#20381;&#38972;&#20154;&#21517;&#12434;&#20837;&#21147;&#65288;&#20363;&#65306;&#23665;&#30000;&#12373;&#12435;&#65289;">
+<label>依頼人</label>
+<input type="text" id="kaijoRequester" class="form-input" placeholder="依頼人名を入力（例：山田さん）">
 </div>
 <div class="form-group">
-<label>LINE&#21517;&#65288;&#35079;&#25968;&#20154;&#20837;&#21147;&#21487;&#65289;</label>
+<label>LINE名（複数人入力可）</label>
 <div class="line-name-list" id="kaijoLineList">
 <div class="line-name-row">
-<input type="text" class="form-input kaijo-line-input" placeholder="LINE&#21517;&#12434;&#20837;&#21147;">
+<input type="text" class="form-input kaijo-line-input" placeholder="LINE名を入力">
 </div>
 </div>
-<button class="add-line-btn" onclick="addKaijoLine()">&#65291; &#36861;&#21152;</button>
+<button class="add-line-btn" onclick="addKaijoLine()">＋ 追加</button>
 </div>
 <div class="form-group">
-<label>&#12458;&#12503;&#12481;&#12515;&#21517;&#65288;&#35079;&#25968;&#36984;&#25246;&#21487;&#12539;&#20877;&#12463;&#12522;&#12483;&#12463;&#12391;&#35299;&#38500;&#65289;</label>
+<label>オプチャ名（複数選択可・再クリックで解除）</label>
 <div class="opcha-section">
-<div class="opcha-section-title">&#128230; AI&#12458;&#12503;&#12481;&#12515;</div>
+<div class="opcha-section-title">📦 AIオプチャ</div>
 <div class="opcha-buttons" id="kaijo-ai-opcha-btns"></div>
 </div>
 <div class="opcha-section">
-<div class="opcha-section-title">&#128230; &#29289;&#36009;&#12458;&#12503;&#12481;&#12515;</div>
+<div class="opcha-section-title">📦 物販オプチャ</div>
 <div class="opcha-buttons" id="kaijo-buppan-opcha-btns"></div>
 </div>
 </div>
 <div class="form-group">
-<label>&#20633;&#32771;</label>
-<textarea id="kaijoNote" class="form-textarea" placeholder="&#20633;&#32771;&#12364;&#12354;&#12428;&#12400;&#20837;&#21147;&#12375;&#12390;&#12367;&#12384;&#12373;&#12356;"></textarea>
+<label>備考</label>
+<textarea id="kaijoNote" class="form-textarea" placeholder="備考があれば入力してください"></textarea>
 </div>
-<button class="submit-btn red-btn" onclick="submitKaijo()" id="kaijoSubmitBtn">&#128238; &#35299;&#38500;&#20381;&#38972;&#36865;&#20449;&#65288;&#65291;Chatwork&#36890;&#30693;&#65289;</button>
+<button class="submit-btn red-btn" onclick="submitKaijo()" id="kaijoSubmitBtn">📮 解除依頼送信（＋Chatwork通知）</button>
 </div>
 </div>
 <div class="toast" id="toast"></div>
 <script>
 var SHEET_ID="1I2Y0FST_BjkhQW3b4B35V0C9uZXE4KIIpvoEtOILP2Y";
 var GAS_URL="https://script.google.com/macros/s/AKfycbzOLy31e4n8cOtYBBXbixYAJzKAs50xp2_6eQW2d299agNLavK2MAaXj2pdEQrIoj2npw/exec";
-var SHEETS={"ai-dosen":{gid:"0",headers:["No.","&#23566;&#32218;&#21517;","&#12458;&#12503;&#12481;&#12515;&#21517;&#31216;","&#12458;&#12503;&#12481;&#12515;&#12522;&#12531;&#12463;"]},"buppan-dosen":{gid:"781201449",headers:["No.","&#23566;&#32218;&#21517;","&#12458;&#12503;&#12481;&#12515;&#21517;&#31216;","&#12458;&#12503;&#12481;&#12515;&#12522;&#12531;&#12463;"]},"ai-kengen":{gid:"638022198",headers:["No.","&#12458;&#12503;&#12481;&#12515;&#21517;&#31216;","&#31649;&#29702;&#32773;","&#23550;&#35937;&#32773;&#21517;","&#31649;&#29702;&#32773;&#27177;&#38480;&#20184;&#19982;&#32773;","&#12458;&#12503;&#12481;&#12515;&#12522;&#12531;&#12463;","&#23566;&#32218;&#26377;&#28961;"]},"buppan-kengen":{gid:"1584463383",headers:["No.","&#12458;&#12503;&#12481;&#12515;&#21517;&#31216;","&#31649;&#29702;&#32773;","&#23550;&#35937;&#32773;&#21517;","&#31649;&#29702;&#32773;&#27177;&#38480;&#20184;&#19982;&#32773;","&#12458;&#12503;&#12481;&#12515;&#12522;&#12531;&#12463;","&#23566;&#32218;&#26377;&#28961;"]}};
-var AI_OPCHA=["AI&#12510;&#12493;&#12479;&#12452;&#12474;&#20465;&#27005;&#37096;","&#26376;100&#19975;&#12434;&#30446;&#25351;&#12377;&#21103;&#26989;&#22654;","&#21103;&#26989;&#22899;&#23376;&#12354;&#12388;&#12414;&#12428;&#65281;","&#12476;&#12525;&#12363;&#12425;&#12398;&#36039;&#29987;&#24418;&#25104;","AI&#12402;&#12429;&#12400;","AI&#12450;&#12501;&#12451;&#20840;&#20307;&#12464;&#12523;&#12540;&#12503;","&#12304;&#36939;&#21942;&#12305;AI&#12450;&#12501;&#12451;","AI ONE&#12513;&#12452;&#12531;&#12464;&#12523;&#12540;&#12503;"];
-var BUPPAN_OPCHA=["&#12495;&#12452;&#12502;&#12521;&#12531;&#12489;&#21368; &#20181;&#20837;&#12428;&#35500;&#26126;&#20250;","&#12414;&#12356;&#12395;&#12385;&#29289;&#36009;","&#12414;&#12356;&#12395;&#12385;&#29289;&#36009;&#12464;&#12523;&#12540;&#12503;","&#29289;&#36009;ONE&#12304;&#12495;&#12452;&#12502;&#12521;&#12531;&#12489;&#21368;&#12305;","&#29289;&#36009;&#12476;&#12511;&#38598;&#20013;&#35611;&#24231;&#12464;&#12523;&#12540;&#12503;LINE","&#12393;&#12371;&#12391;&#12418;&#29289;&#36009;","&#12304;&#22806;&#37096;&#27969;&#20986;&#21427;&#31105;&#12305;&#21033;&#30410;&#21830;&#21697;&#32057;&#20171;&#12464;&#12523;&#12540;&#12503;","&#29289;&#36009;ONE&#12304;&#12450;&#12497;&#12524;&#12523;&#37096;&#38272;&#12305;","&#29289;&#36009;ONE&#12304;zoom&#27770;&#36215;&#20250;&#12305;&#12464;&#12523;&#12540;&#12503; LINE","&#29289;&#36009;ONE&#12304;ebay&#37096;&#38272;&#12305;","&#12298;&#22823;&#36870;&#36578;&#12398;&#26292;&#38706;&#12299;1&#24180;&#12391;5,000&#19975;&#31292;&#12356;&#12384;&#31192;&#23494;","&#29289;&#36009;ONE&#12304;Amazon&#37096;&#38272;&#12305;&#20840;&#20307;LINE","&#12495;&#12452;&#12502;&#12521;&#12531;&#12489;&#21368; &#26997;&#31192;&#12464;&#12523;&#12540;&#12503;"];
+var SHEETS={"ai-dosen":{gid:"0",headers:["No.","導線名","オプチャ名称","オプチャリンク"]},"buppan-dosen":{gid:"781201449",headers:["No.","導線名","オプチャ名称","オプチャリンク"]},"ai-kengen":{gid:"638022198",headers:["No.","オプチャ名称","管理者","対象者名","管理者権限付与者","オプチャリンク","導線有無"]},"buppan-kengen":{gid:"1584463383",headers:["No.","オプチャ名称","管理者","対象者名","管理者権限付与者","オプチャリンク","導線有無"]}};
+var AI_OPCHA=["AIマネタイズ俱楽部","月100万を目指す副業塾","副業女子あつまれ！","ゼロからの資産形成","AIひろば","AIアフィ全体グループ","【運営】AIアフィ","AI ONEメイングループ"];
+var BUPPAN_OPCHA=["ハイブランド卸 仕入れ説明会","まいにち物販","まいにち物販グループ","物販ONE【ハイブランド卸】","物販ゼミ集中講座グループLINE","どこでも物販","【外部流出厳禁】利益商品紹介グループ","物販ONE【アパレル部門】","物販ONE【zoom決起会】グループ LINE","物販ONE【ebay部門】","《大逆転の暴露》1年で5,000万稼いだ秘密","物販ONE【Amazon部門】全体LINE","ハイブランド卸 極秘グループ"];
 var selectedOpcha=[];
 var selectedKaijoOpcha=[];
 function setTheme(t){if(t==="light"){document.body.classList.add("light")}else{document.body.classList.remove("light")}localStorage.setItem("theme",t)}
@@ -303,7 +303,7 @@ var url="https://docs.google.com/spreadsheets/d/"+SHEET_ID+"/gviz/tq?tqx=out:csv
 var container=document.getElementById("table-"+key);
 fetch(url).then(function(r){return r.text()}).then(function(csv){
 var rows=parseCSV(csv);
-if(rows.length<2){container.innerHTML="<p>&#12487;&#12540;&#12479;&#12364;&#12354;&#12426;&#12414;&#12379;&#12435;</p>";return}
+if(rows.length<2){container.innerHTML="<p>データがありません</p>";return}
 var html="<table class=\"data-table\"><thead><tr>";
 s.headers.forEach(function(hd){html+="<th>"+hd+"</th>"});
 html+="</tr></thead><tbody>";
@@ -313,8 +313,8 @@ if(!r||r.length<2||!r[0])continue;
 html+="<tr>";
 for(var j=0;j<s.headers.length;j++){
 var v=r[j]||"";
-if(s.headers[j].indexOf("&#12522;&#12531;&#12463;")!==-1&&v.indexOf("http")===0){html+="<td><a href=\""+v+"\" target=\"_blank\">"+v.substring(0,60)+"...</a></td>"}
-else if(s.headers[j]==="&#23566;&#32218;&#26377;&#28961;"){var cls=v==="&#9675;"?"yes":"no";html+="<td><span class=\"status-badge "+cls+"\">"+(v||"&#8212;")+"</span></td>"}
+if(s.headers[j].indexOf("リンク")!==-1&&v.indexOf("http")===0){html+="<td><a href=\""+v+"\" target=\"_blank\">"+v.substring(0,60)+"...</a></td>"}
+else if(s.headers[j]==="導線有無"){var cls=v==="○"?"yes":"no";html+="<td><span class=\"status-badge "+cls+"\">"+(v||"—")+"</span></td>"}
 else{html+="<td>"+v+"</td>"}
 }
 html+="</tr>";
@@ -323,7 +323,7 @@ html+="</tbody></table>";
 container.innerHTML=html;
 container.classList.remove("loading");
 document.getElementById("panel-"+key).dataset.loaded="1";
-}).catch(function(){container.innerHTML="<p style=\"color:#ff4444\">&#12487;&#12540;&#12479;&#12398;&#35501;&#12415;&#36796;&#12415;&#12395;&#22833;&#25943;&#12375;&#12414;&#12375;&#12383;&#12290;</p>";container.classList.remove("loading")});
+}).catch(function(){container.innerHTML="<p style=\"color:#ff4444\">データの読み込みに失敗しました。</p>";container.classList.remove("loading")});
 }
 function parseCSV(text){
 var rows=[],row=[],cell="",inQ=false;
@@ -374,11 +374,11 @@ kaijoBAddBtn.onclick=function(){addKaijoOpcha("buppan")};
 kaijoBc.appendChild(kaijoBAddBtn);
 }
 function addOpcha(type){
-var name=prompt("&#36861;&#21152;&#12377;&#12427;&#12458;&#12503;&#12481;&#12515;&#21517;&#12434;&#20837;&#21147;&#12375;&#12390;&#12367;&#12384;&#12373;&#12356;&#65306;");
+var name=prompt("追加するオプチャ名を入力してください：");
 if(!name||!name.trim())return;
 var trimmed=name.trim();
 var allNames=AI_OPCHA.concat(BUPPAN_OPCHA);
-if(allNames.indexOf(trimmed)!==-1){showToast("&#12381;&#12398;&#12458;&#12503;&#12481;&#12515;&#21517;&#12399;&#26082;&#12395;&#23384;&#22312;&#12375;&#12414;&#12377;","error");return}
+if(allNames.indexOf(trimmed)!==-1){showToast("そのオプチャ名は既に存在します","error");return}
 var container=type==="ai"?document.getElementById("ai-opcha-btns"):document.getElementById("buppan-opcha-btns");
 var addBtn=container.querySelector(".add-opcha-btn");
 var newBtn=document.createElement("button");
@@ -387,14 +387,14 @@ newBtn.textContent=trimmed;
 newBtn.onclick=function(){toggleOpcha(newBtn,trimmed,selectedOpcha)};
 container.insertBefore(newBtn,addBtn);
 if(type==="ai"){AI_OPCHA.push(trimmed)}else{BUPPAN_OPCHA.push(trimmed)}
-showToast("&#12300;"+trimmed+"&#12301;&#12434;&#36861;&#21152;&#12375;&#12414;&#12375;&#12383;");
+showToast("「"+trimmed+"」を追加しました");
 }
 function addKaijoOpcha(type){
-var name=prompt("&#36861;&#21152;&#12377;&#12427;&#12458;&#12503;&#12481;&#12515;&#21517;&#12434;&#20837;&#21147;&#12375;&#12390;&#12367;&#12384;&#12373;&#12356;&#65306;");
+var name=prompt("追加するオプチャ名を入力してください：");
 if(!name||!name.trim())return;
 var trimmed=name.trim();
 var allNames=AI_OPCHA.concat(BUPPAN_OPCHA);
-if(allNames.indexOf(trimmed)!==-1){showToast("&#12381;&#12398;&#12458;&#12503;&#12481;&#12515;&#21517;&#12399;&#26082;&#12395;&#23384;&#22312;&#12375;&#12414;&#12377;","error");return}
+if(allNames.indexOf(trimmed)!==-1){showToast("そのオプチャ名は既に存在します","error");return}
 var container=type==="ai"?document.getElementById("kaijo-ai-opcha-btns"):document.getElementById("kaijo-buppan-opcha-btns");
 var addBtn=container.querySelector(".add-opcha-btn");
 var newBtn=document.createElement("button");
@@ -403,7 +403,7 @@ newBtn.textContent=trimmed;
 newBtn.onclick=function(){toggleOpcha(newBtn,trimmed,selectedKaijoOpcha)};
 container.insertBefore(newBtn,addBtn);
 if(type==="ai"){AI_OPCHA.push(trimmed)}else{BUPPAN_OPCHA.push(trimmed)}
-showToast("&#12300;"+trimmed+"&#12301;&#12434;&#36861;&#21152;&#12375;&#12414;&#12375;&#12383;");
+showToast("「"+trimmed+"」を追加しました");
 }
 function toggleOpcha(btn,name,selArr){
 var idx=selArr.indexOf(name);
@@ -417,10 +417,10 @@ row.className="line-name-row";
 var input=document.createElement("input");
 input.type="text";
 input.className="form-input irai-line-input";
-input.placeholder="LINE&#21517;&#12434;&#20837;&#21147;";
+input.placeholder="LINE名を入力";
 var removeBtn=document.createElement("button");
 removeBtn.className="remove-line-btn";
-removeBtn.textContent="&#21066;&#38500;";
+removeBtn.textContent="削除";
 removeBtn.onclick=function(){row.remove()};
 row.appendChild(input);
 row.appendChild(removeBtn);
@@ -433,10 +433,10 @@ row.className="line-name-row";
 var input=document.createElement("input");
 input.type="text";
 input.className="form-input kaijo-line-input";
-input.placeholder="LINE&#21517;&#12434;&#20837;&#21147;";
+input.placeholder="LINE名を入力";
 var removeBtn=document.createElement("button");
 removeBtn.className="remove-line-btn";
-removeBtn.textContent="&#21066;&#38500;";
+removeBtn.textContent="削除";
 removeBtn.onclick=function(){row.remove()};
 row.appendChild(input);
 row.appendChild(removeBtn);
@@ -448,23 +448,23 @@ var inputs=document.querySelectorAll(".irai-line-input");
 var lineNames=[];
 inputs.forEach(function(inp){var v=inp.value.trim();if(v)lineNames.push(v)});
 var note=document.getElementById("iraiNote").value.trim();
-if(!requester){showToast("&#20381;&#38972;&#20154;&#12434;&#20837;&#21147;&#12375;&#12390;&#12367;&#12384;&#12373;&#12356;","error");return}
-if(lineNames.length===0){showToast("LINE&#21517;&#12434;&#20837;&#21147;&#12375;&#12390;&#12367;&#12384;&#12373;&#12356;","error");return}
-if(selectedOpcha.length===0){showToast("&#12458;&#12503;&#12481;&#12515;&#12434;&#36984;&#25246;&#12375;&#12390;&#12367;&#12384;&#12373;&#12356;","error");return}
+if(!requester){showToast("依頼人を入力してください","error");return}
+if(lineNames.length===0){showToast("LINE名を入力してください","error");return}
+if(selectedOpcha.length===0){showToast("オプチャを選択してください","error");return}
 var btn=document.getElementById("submitBtn");
-btn.disabled=true;btn.textContent="&#36865;&#20449;&#20013;...";
+btn.disabled=true;btn.textContent="送信中...";
 var aiSel=selectedOpcha.filter(function(n){return AI_OPCHA.indexOf(n)>=0});var buSel=selectedOpcha.filter(function(n){return BUPPAN_OPCHA.indexOf(n)>=0});var msg="以下、自動振り分け完了\n依頼人："+requester;if(aiSel.length>0){msg+="\n\n◎AIオプチャ権限\n"+lineNames.join("\n")}if(buSel.length>0){msg+="\n\n◎物販オプチャ権限\n"+lineNames.join("\n")}
 if(note){msg+="\n補足："+note}
 fetch(GAS_URL,{method:"POST",headers:{"Content-Type":"text/plain"},body:JSON.stringify({message:msg}),mode:"no-cors"})
-.then(function(){showToast("Chatwork&#12395;&#36890;&#30693;&#12434;&#36865;&#20449;&#12375;&#12414;&#12375;&#12383;&#65281;");
+.then(function(){showToast("Chatworkに通知を送信しました！");
 document.getElementById("requester").value="";
-document.getElementById("iraiLineList").innerHTML='<div class="line-name-row"><input type="text" class="form-input irai-line-input" placeholder="LINE&#21517;&#12434;&#20837;&#21147;"></div>';
+document.getElementById("iraiLineList").innerHTML='<div class="line-name-row"><input type="text" class="form-input irai-line-input" placeholder="LINE名を入力"></div>';
 document.getElementById("iraiNote").value="";
 selectedOpcha=[];
 document.querySelectorAll("#panel-irai .opcha-btn.selected").forEach(function(b){b.classList.remove("selected")});
 })
-.catch(function(e){showToast("&#36865;&#20449;&#12395;&#22833;&#25943;&#12375;&#12414;&#12375;&#12383;: "+e.message,"error")})
-.finally(function(){btn.disabled=false;btn.innerHTML="\uD83D\uDCEE &#20381;&#38972;&#36865;&#20449;&#65288;&#65291;Chatwork&#36890;&#30693;&#65289;"});
+.catch(function(e){showToast("送信に失敗しました: "+e.message,"error")})
+.finally(function(){btn.disabled=false;btn.innerHTML="\uD83D\uDCEE 依頼送信（＋Chatwork通知）"});
 }
 function submitKaijo(){
 var requester=document.getElementById("kaijoRequester").value.trim();
@@ -472,23 +472,23 @@ var inputs=document.querySelectorAll(".kaijo-line-input");
 var lineNames=[];
 inputs.forEach(function(inp){var v=inp.value.trim();if(v)lineNames.push(v)});
 var note=document.getElementById("kaijoNote").value.trim();
-if(!requester){showToast("&#20381;&#38972;&#20154;&#12434;&#20837;&#21147;&#12375;&#12390;&#12367;&#12384;&#12373;&#12356;","error");return}
-if(lineNames.length===0){showToast("LINE&#21517;&#12434;&#20837;&#21147;&#12375;&#12390;&#12367;&#12384;&#12373;&#12356;","error");return}
-if(selectedKaijoOpcha.length===0){showToast("&#12458;&#12503;&#12481;&#12515;&#12434;&#36984;&#25246;&#12375;&#12390;&#12367;&#12384;&#12373;&#12356;","error");return}
+if(!requester){showToast("依頼人を入力してください","error");return}
+if(lineNames.length===0){showToast("LINE名を入力してください","error");return}
+if(selectedKaijoOpcha.length===0){showToast("オプチャを選択してください","error");return}
 var btn=document.getElementById("kaijoSubmitBtn");
-btn.disabled=true;btn.textContent="&#36865;&#20449;&#20013;...";
+btn.disabled=true;btn.textContent="送信中...";
 var aiSel=selectedKaijoOpcha.filter(function(n){return AI_OPCHA.indexOf(n)>=0});var buSel=selectedKaijoOpcha.filter(function(n){return BUPPAN_OPCHA.indexOf(n)>=0});var msg="以下、自動振り分け完了\n依頼人："+requester;if(aiSel.length>0){msg+="\n\n◎AIオプチャ権限\n"+lineNames.join("\n")}if(buSel.length>0){msg+="\n\n◎物販オプチャ権限\n"+lineNames.join("\n")}
 if(note){msg+="\n補足："+note}
 fetch(GAS_URL,{method:"POST",headers:{"Content-Type":"text/plain"},body:JSON.stringify({message:msg}),mode:"no-cors"})
-.then(function(){showToast("Chatwork&#12395;&#35299;&#38500;&#20381;&#38972;&#12434;&#36865;&#20449;&#12375;&#12414;&#12375;&#12383;&#65281;");
+.then(function(){showToast("Chatworkに解除依頼を送信しました！");
 document.getElementById("kaijoRequester").value="";
-document.getElementById("kaijoLineList").innerHTML='<div class="line-name-row"><input type="text" class="form-input kaijo-line-input" placeholder="LINE&#21517;&#12434;&#20837;&#21147;"></div>';
+document.getElementById("kaijoLineList").innerHTML='<div class="line-name-row"><input type="text" class="form-input kaijo-line-input" placeholder="LINE名を入力"></div>';
 document.getElementById("kaijoNote").value="";
 selectedKaijoOpcha=[];
 document.querySelectorAll("#panel-kaijo .opcha-btn.selected").forEach(function(b){b.classList.remove("selected")});
 })
-.catch(function(e){showToast("&#36865;&#20449;&#12395;&#22833;&#25943;&#12375;&#12414;&#12375;&#12383;: "+e.message,"error")})
-.finally(function(){btn.disabled=false;btn.innerHTML="\uD83D\uDCEE &#35299;&#38500;&#20381;&#38972;&#36865;&#20449;&#65288;&#65291;Chatwork&#36890;&#30693;&#65289;"});
+.catch(function(e){showToast("送信に失敗しました: "+e.message,"error")})
+.finally(function(){btn.disabled=false;btn.innerHTML="\uD83D\uDCEE 解除依頼送信（＋Chatwork通知）"});
 }
 function showToast(msg,type){
 var t=document.getElementById("toast");
