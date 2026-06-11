@@ -453,8 +453,8 @@ if(lineNames.length===0){showToast("LINE名を入力してください","error")
 if(selectedOpcha.length===0){showToast("オプチャを選択してください","error");return}
 var btn=document.getElementById("submitBtn");
 btn.disabled=true;btn.textContent="送信中...";
-var aiSel=selectedOpcha.filter(function(n){return AI_OPCHA.indexOf(n)>=0});var buSel=selectedOpcha.filter(function(n){return BUPPAN_OPCHA.indexOf(n)>=0});var msg="【権限付与依頼】\n以下、自動振り分け完了\n依頼人："+requester;if(aiSel.length>0){msg+="\n\n◎AIオプチャ権限\n"+lineNames.join("\n")}if(buSel.length>0){msg+="\n\n◎物販オプチャ権限\n"+lineNames.join("\n")}
-if(note){msg+="\n補足："+note}
+var aiSel=selectedOpcha.filter(function(n){return AI_OPCHA.indexOf(n)>=0});var buSel=selectedOpcha.filter(function(n){return BUPPAN_OPCHA.indexOf(n)>=0});var msg="【権限付与依頼】\n以下、自動振り分け完了\n依頼人："+requester+"\n対象者："+lineNames.join("、");if(aiSel.length>0){msg+="\n\n◎AIオプチャ権限\n"+aiSel.join("\n")}if(buSel.length>0){msg+="\n\n◎物販オプチャ権限\n"+buSel.join("\n")}
+if(note){msg+="\n\n◾️補足："+note}
 fetch(GAS_URL,{method:"POST",headers:{"Content-Type":"text/plain"},body:JSON.stringify({message:msg}),mode:"no-cors"})
 .then(function(){showToast("Chatworkに通知を送信しました！");
 document.getElementById("requester").value="";
@@ -477,8 +477,8 @@ if(lineNames.length===0){showToast("LINE名を入力してください","error")
 if(selectedKaijoOpcha.length===0){showToast("オプチャを選択してください","error");return}
 var btn=document.getElementById("kaijoSubmitBtn");
 btn.disabled=true;btn.textContent="送信中...";
-var aiSel=selectedKaijoOpcha.filter(function(n){return AI_OPCHA.indexOf(n)>=0});var buSel=selectedKaijoOpcha.filter(function(n){return BUPPAN_OPCHA.indexOf(n)>=0});var msg="【権限解除依頼】\n以下、自動振り分け完了\n依頼人："+requester;if(aiSel.length>0){msg+="\n\n◎AIオプチャ権限\n"+lineNames.join("\n")}if(buSel.length>0){msg+="\n\n◎物販オプチャ権限\n"+lineNames.join("\n")}
-if(note){msg+="\n補足："+note}
+var aiSel=selectedKaijoOpcha.filter(function(n){return AI_OPCHA.indexOf(n)>=0});var buSel=selectedKaijoOpcha.filter(function(n){return BUPPAN_OPCHA.indexOf(n)>=0});var msg="【権限解除依頼】\n以下、自動振り分け完了\n依頼人："+requester+"\n対象者："+lineNames.join("、");if(aiSel.length>0){msg+="\n\n◎AIオプチャ権限\n"+aiSel.join("\n")}if(buSel.length>0){msg+="\n\n◎物販オプチャ権限\n"+buSel.join("\n")}
+if(note){msg+="\n\n◾️補足："+note}
 fetch(GAS_URL,{method:"POST",headers:{"Content-Type":"text/plain"},body:JSON.stringify({message:msg}),mode:"no-cors"})
 .then(function(){showToast("Chatworkに解除依頼を送信しました！");
 document.getElementById("kaijoRequester").value="";
