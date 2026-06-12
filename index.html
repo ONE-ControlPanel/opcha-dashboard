@@ -529,7 +529,7 @@ document.querySelectorAll("#panel-kaijo .opcha-btn.selected").forEach(function(b
 .finally(function(){btn.disabled=false;btn.innerHTML="📮 解除依頼送信（＋Chatwork通知）"});
 });
 }
-var NOTICE_TEXT="20:00まで： 当日対応\n\n20:00以降： 翌日以降の対応\n\n※スケジュールにより変動する場合がございます。";
+var NOTICE_TEXT="20:00まで： 当日対応\n20:00以降： 翌日以降の対応\n※スケジュールにより変動する場合がございます。";
 var _confirmTimer=null;
 function showConfirmPopup(onConfirm){
   var overlay=document.getElementById("confirmModal");
