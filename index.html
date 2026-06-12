@@ -251,7 +251,7 @@ window.doPasswordReset = async function() { const email = document.getElementByI
 <label>補足（期日の記載もお願いします）</label>
 <textarea id="iraiNote" class="form-textarea" placeholder="備考があれば入力してください"></textarea>
 </div>
-  <div class="form-group" style="font-size:13px;line-height:1.7;color:#888;margin-top:-4px;">※当日20時までの場合：当日対応(スケジュールにより変動あり)<br>※当日20時過ぎの場合：別対応(スケジュールにより変動あり)</div>
+  <div class="form-group" style="font-size:13px;line-height:1.7;color:#888;margin-top:-4px;">20:00まで： 当日対応<br><br>20:00以降： 翌日以降の対応<br><br>※スケジュールにより変動する場合がございます。</div>
 <button class="submit-btn" onclick="submitRequest()" id="submitBtn">📮 依頼送信（＋Chatwork通知）</button>
 </div>
 <div id="panel-kaijo" class="panel">
@@ -517,7 +517,7 @@ document.querySelectorAll("#panel-kaijo .opcha-btn.selected").forEach(function(b
 .finally(function(){btn.disabled=false;btn.innerHTML="📮 解除依頼送信（＋Chatwork通知）"});
 });
 }
-var NOTICE_TEXT="※当日20時までの場合：当日対応(スケジュールにより変動あり)\n※当日20時過ぎの場合：別対応(スケジュールにより変動あり)";
+var NOTICE_TEXT="20:00まで： 当日対応\n\n20:00以降： 翌日以降の対応\n\n※スケジュールにより変動する場合がございます。";
 var _confirmTimer=null;
 function showConfirmPopup(onConfirm){
   var overlay=document.getElementById("confirmModal");
