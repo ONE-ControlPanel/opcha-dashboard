@@ -89,6 +89,19 @@ body.light .theme-btn.dark-btn{background:#555;color:#fff}
 .user-info{font-size:.82em;color:var(--text2)}
 .logout-btn{padding:8px 16px;background:transparent;border:1px solid var(--border);border-radius:20px;color:var(--text2);cursor:pointer;font-size:.85em;transition:all .3s}
 .logout-btn:hover{border-color:#e74c3c;color:#e74c3c}
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;justify-content:center;align-items:center;z-index:10000;padding:20px}
+.modal-overlay.show{display:flex}
+.modal-box{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:28px;max-width:520px;width:100%;box-shadow:0 10px 40px rgba(0,0,0,.4);text-align:center}
+.modal-notice{color:var(--text);font-size:.95em;line-height:1.9;text-align:left;white-space:pre-wrap;margin-bottom:20px}
+.modal-wait{color:var(--text2);font-size:.85em;margin-top:6px;display:flex;align-items:center;justify-content:center;gap:8px}
+.modal-wait::after{content:"";width:16px;height:16px;border:2px solid var(--text2);border-top-color:var(--green);border-radius:50%;animation:spin 1s linear infinite}
+.modal-actions{display:none;gap:12px;justify-content:center;margin-top:8px}
+.modal-actions.show{display:flex}
+.modal-btn{padding:12px 32px;border:none;border-radius:8px;font-size:1em;font-weight:bold;cursor:pointer;transition:all .3s}
+.modal-btn.confirm{background:var(--green);color:#fff}
+.modal-btn.confirm:hover{opacity:.85}
+.modal-btn.cancel{background:transparent;border:1px solid var(--border);color:var(--text2)}
+.modal-btn.cancel:hover{border-color:var(--red);color:var(--red)}
 </style>
 
 <!-- Firebase SDK -->
@@ -276,6 +289,16 @@ window.doPasswordReset = async function() { const email = document.getElementByI
 </div>
 </div>
 <div class="toast" id="toast"></div>
+<div class="modal-overlay" id="confirmModal">
+  <div class="modal-box">
+    <div class="modal-notice" id="confirmNotice"></div>
+    <div class="modal-wait" id="confirmWait">確認中です。しばらくお待ちください...</div>
+    <div class="modal-actions" id="confirmActions">
+      <button class="modal-btn cancel" id="confirmCancelBtn">修正</button>
+      <button class="modal-btn confirm" id="confirmOkBtn">依頼</button>
+    </div>
+  </div>
+</div>
 <script>
 var SHEET_ID="1I2Y0FST_BjkhQW3b4B35V0C9uZXE4KIIpvoEtOILP2Y";
 var GAS_URL="https://script.google.com/macros/s/AKfycbzOLy31e4n8cOtYBBXbixYAJzKAs50xp2_6eQW2d299agNLavK2MAaXj2pdEQrIoj2npw/exec";
@@ -452,9 +475,10 @@ if(!requester){showToast("依頼人を入力してください","error");return}
 if(lineNames.length===0){showToast("LINE名を入力してください","error");return}
 if(selectedOpcha.length===0){showToast("オプチャを選択してください","error");return}
 var btn=document.getElementById("submitBtn");
-btn.disabled=true;btn.textContent="送信中...";
+showConfirmPopup(function(){
 var aiSel=selectedOpcha.filter(function(n){return AI_OPCHA.indexOf(n)>=0});var buSel=selectedOpcha.filter(function(n){return BUPPAN_OPCHA.indexOf(n)>=0});var msg="【権限付与依頼】\n以下、自動振り分け完了\n依頼人："+requester+"\n対象者："+lineNames.join("、");if(aiSel.length>0){msg+="\n\n◎AIオプチャ権限\n"+aiSel.join("\n")}if(buSel.length>0){msg+="\n\n◎物販オプチャ権限\n"+buSel.join("\n")}
 if(note){msg+="\n\n◾️補足："+note}
+btn.disabled=true;btn.textContent="送信中...";
 fetch(GAS_URL,{method:"POST",headers:{"Content-Type":"text/plain"},body:JSON.stringify({message:msg}),mode:"no-cors"})
 .then(function(){showToast("Chatworkに通知を送信しました！");
 document.getElementById("requester").value="";
@@ -464,7 +488,8 @@ selectedOpcha=[];
 document.querySelectorAll("#panel-irai .opcha-btn.selected").forEach(function(b){b.classList.remove("selected")});
 })
 .catch(function(e){showToast("送信に失敗しました: "+e.message,"error")})
-.finally(function(){btn.disabled=false;btn.innerHTML="\uD83D\uDCEE 依頼送信（＋Chatwork通知）"});
+.finally(function(){btn.disabled=false;btn.innerHTML="📮 依頼送信（＋Chatwork通知）"});
+});
 }
 function submitKaijo(){
 var requester=document.getElementById("kaijoRequester").value.trim();
@@ -476,9 +501,10 @@ if(!requester){showToast("依頼人を入力してください","error");return}
 if(lineNames.length===0){showToast("LINE名を入力してください","error");return}
 if(selectedKaijoOpcha.length===0){showToast("オプチャを選択してください","error");return}
 var btn=document.getElementById("kaijoSubmitBtn");
-btn.disabled=true;btn.textContent="送信中...";
+showConfirmPopup(function(){
 var aiSel=selectedKaijoOpcha.filter(function(n){return AI_OPCHA.indexOf(n)>=0});var buSel=selectedKaijoOpcha.filter(function(n){return BUPPAN_OPCHA.indexOf(n)>=0});var msg="【権限解除依頼】\n以下、自動振り分け完了\n依頼人："+requester+"\n対象者："+lineNames.join("、");if(aiSel.length>0){msg+="\n\n◎AIオプチャ権限\n"+aiSel.join("\n")}if(buSel.length>0){msg+="\n\n◎物販オプチャ権限\n"+buSel.join("\n")}
 if(note){msg+="\n\n◾️補足："+note}
+btn.disabled=true;btn.textContent="送信中...";
 fetch(GAS_URL,{method:"POST",headers:{"Content-Type":"text/plain"},body:JSON.stringify({message:msg}),mode:"no-cors"})
 .then(function(){showToast("Chatworkに解除依頼を送信しました！");
 document.getElementById("kaijoRequester").value="";
@@ -488,7 +514,27 @@ selectedKaijoOpcha=[];
 document.querySelectorAll("#panel-kaijo .opcha-btn.selected").forEach(function(b){b.classList.remove("selected")});
 })
 .catch(function(e){showToast("送信に失敗しました: "+e.message,"error")})
-.finally(function(){btn.disabled=false;btn.innerHTML="\uD83D\uDCEE 解除依頼送信（＋Chatwork通知）"});
+.finally(function(){btn.disabled=false;btn.innerHTML="📮 解除依頼送信（＋Chatwork通知）"});
+});
+}
+var NOTICE_TEXT="※当日20時までの場合：当日対応(スケジュールにより変動あり)\n※当日20時過ぎの場合：別対応(スケジュールにより変動あり)";
+var _confirmTimer=null;
+function showConfirmPopup(onConfirm){
+  var overlay=document.getElementById("confirmModal");
+  var notice=document.getElementById("confirmNotice");
+  var wait=document.getElementById("confirmWait");
+  var actions=document.getElementById("confirmActions");
+  var okBtn=document.getElementById("confirmOkBtn");
+  var cancelBtn=document.getElementById("confirmCancelBtn");
+  notice.textContent=NOTICE_TEXT;
+  wait.style.display="flex";
+  actions.classList.remove("show");
+  overlay.classList.add("show");
+  function close(){overlay.classList.remove("show");if(_confirmTimer){clearTimeout(_confirmTimer);_confirmTimer=null;}okBtn.onclick=null;cancelBtn.onclick=null;}
+  if(_confirmTimer)clearTimeout(_confirmTimer);
+  _confirmTimer=setTimeout(function(){wait.style.display="none";actions.classList.add("show");},5000);
+  okBtn.onclick=function(){close();onConfirm();};
+  cancelBtn.onclick=function(){close();};
 }
 function showToast(msg,type){
 var t=document.getElementById("toast");
