@@ -237,6 +237,13 @@ window.doPasswordReset = async function() { const email = document.getElementByI
 <button class="add-line-btn" onclick="addIraiLine()">＋ 追加</button>        <div style="font-size:13px;line-height:1.7;color:#888;margin-top:4px;">※「かず＠〇〇」⬅︎の場合：「(使用者)➡︎かず＠〇〇」で入力お願いします！</div>
 </div>
 <div class="form-group">
+<label>期限記入</label>
+<div style="display:flex;gap:8px;flex-wrap:wrap;">
+<input type="date" id="iraiDeadlineDate" class="form-input" style="flex:1;min-width:150px;">
+<input type="time" id="iraiDeadlineTime" class="form-input" style="flex:1;min-width:120px;">
+</div>
+</div>
+<div class="form-group">
 <label>オプチャ名（複数選択可・再クリックで解除）</label>
 <div class="opcha-section">
 <div class="opcha-section-title">📦 AIオプチャ</div>
@@ -471,12 +478,14 @@ var inputs=document.querySelectorAll(".irai-line-input");
 var lineNames=[];
 inputs.forEach(function(inp){var v=inp.value.trim();if(v)lineNames.push(v)});
 var note=document.getElementById("iraiNote").value.trim();
+var dlDate=document.getElementById("iraiDeadlineDate").value;var dlTime=document.getElementById("iraiDeadlineTime").value;var deadlineStr="";if(dlDate){var dp=dlDate.split("-");deadlineStr=(dp[1]?parseInt(dp[1],10):"")+"月"+(dp[2]?parseInt(dp[2],10):"")+"日";if(dlTime){deadlineStr+=" "+dlTime}}
 if(!requester){showToast("依頼人を入力してください","error");return}
 if(lineNames.length===0){showToast("LINE名を入力してください","error");return}
 if(selectedOpcha.length===0){showToast("オプチャを選択してください","error");return}
 var btn=document.getElementById("submitBtn");
 showConfirmPopup(function(){
 var aiSel=selectedOpcha.filter(function(n){return AI_OPCHA.indexOf(n)>=0});var buSel=selectedOpcha.filter(function(n){return BUPPAN_OPCHA.indexOf(n)>=0});var msg="【権限付与依頼】\n以下、自動振り分け完了\n依頼人："+requester+"\n対象者："+lineNames.join("、");if(aiSel.length>0){msg+="\n\n◎AIオプチャ権限\n"+aiSel.join("\n")}if(buSel.length>0){msg+="\n\n◎物販オプチャ権限\n"+buSel.join("\n")}
+if(deadlineStr){msg+="\n\n◾️期限："+deadlineStr}
 if(note){msg+="\n\n◾️補足："+note}
 btn.disabled=true;btn.textContent="送信中...";
 fetch(GAS_URL,{method:"POST",headers:{"Content-Type":"text/plain"},body:JSON.stringify({message:msg}),mode:"no-cors"})
@@ -484,6 +493,7 @@ fetch(GAS_URL,{method:"POST",headers:{"Content-Type":"text/plain"},body:JSON.str
 document.getElementById("requester").value="";
 document.getElementById("iraiLineList").innerHTML='<div class="line-name-row"><input type="text" class="form-input irai-line-input" placeholder="LINE名を入力"></div>';
 document.getElementById("iraiNote").value="";
+document.getElementById("iraiDeadlineDate").value="";document.getElementById("iraiDeadlineTime").value="";
 selectedOpcha=[];
 document.querySelectorAll("#panel-irai .opcha-btn.selected").forEach(function(b){b.classList.remove("selected")});
 })
