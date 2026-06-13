@@ -35,6 +35,11 @@ body.light .theme-btn.dark-btn{background:#555;color:#fff}
 .form-input::placeholder{color:var(--text2)}
 input[type="date"].form-input,input[type="time"].form-input{color-scheme:dark}
 body.light input[type="date"].form-input,body.light input[type="time"].form-input{color-scheme:light}
+.kanryo-member-list{max-height:200px;overflow-y:auto;border:1px solid var(--border);border-radius:8px;margin-top:8px;background:var(--bg)}
+.kanryo-member-item{padding:10px 14px;cursor:pointer;border-bottom:1px solid var(--border);color:var(--text);font-size:.9em}
+.kanryo-member-item:last-child{border-bottom:none}
+.kanryo-member-item:hover{background:var(--hover)}
+.kanryo-member-item.selected{background:#2980b9;color:#fff}
 .form-textarea{width:100%;max-width:600px;padding:10px 14px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:.9em;outline:none;transition:border .3s;resize:vertical;min-height:60px;font-family:inherit}
 .form-textarea:focus{border-color:var(--green)}
 .form-textarea::placeholder{color:var(--text2)}
@@ -195,6 +200,7 @@ window.doPasswordReset = async function() { const email = document.getElementByI
 <div class="tabs">
 <div class="tab" onclick="switchTab('irai')" style="background:var(--green);color:#fff">📝 権限付与依頼</div>
 <div class="tab" onclick="switchTab('kaijo')" style="background:var(--red);color:#fff">🗑 権限解除依頼</div>
+<div class="tab" onclick="switchTab('kanryo')" style="background:#2980b9;color:#fff">✅ 完了報告</div>
 <div class="tab active" onclick="switchTab('ai-dosen')">AIオプチャ導線</div>
 <div class="tab" onclick="switchTab('buppan-dosen')">物販オプチャ導線</div>
 <div class="tab" onclick="switchTab('ai-kengen')">AIオプチャ権限</div>
@@ -297,6 +303,21 @@ window.doPasswordReset = async function() { const email = document.getElementByI
 <button class="submit-btn red-btn" onclick="submitKaijo()" id="kaijoSubmitBtn">📮 解除依頼送信（＋Chatwork通知）</button>
 </div>
 </div>
+<div id="panel-kanryo" class="panel">
+<div class="panel-title" style="color:#2980b9">✅ 完了報告（Chatwork通知）</div>
+<div class="panel-desc">メンション対象者を選んで送信すると、完了報告がChatworkに通知されます。</div>
+<div class="form-group">
+<label>メンション対象者（チャットメンバーから選択）</label>
+<input type="text" id="kanryoMemberSearch" class="form-input" placeholder="名前で検索" oninput="filterKanryoMembers()">
+<div id="kanryoMemberList" class="kanryo-member-list">読み込み中...</div>
+<div id="kanryoSelectedWrap" style="margin-top:8px;font-size:13px;color:var(--text2)">選択中：<span id="kanryoSelectedName">なし</span></div>
+</div>
+<div class="form-group">
+<label>送信内容</label>
+<div style="font-size:13px;line-height:1.8;color:var(--text2);background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:12px;">【完了】<br><br>オプチャ権限付与完了しました！<br><br>@All機能・王冠マークが表示されるか確認お願いします！</div>
+</div>
+<button class="submit-btn" style="background:#2980b9" onclick="submitKanryo()" id="kanryoSubmitBtn">📮 完了報告を送信（＋Chatwork通知）</button>
+</div>
 <div class="toast" id="toast"></div>
 <div class="modal-overlay" id="confirmModal">
   <div class="modal-box">
@@ -319,15 +340,17 @@ var selectedKaijoOpcha=[];
 function setTheme(t){if(t==="light"){document.body.classList.add("light")}else{document.body.classList.remove("light")}localStorage.setItem("theme",t)}
 (function(){var t=localStorage.getItem("theme");if(t==="light")document.body.classList.add("light")})();
 function switchTab(id){
-var allTabs=["irai","kaijo","ai-dosen","buppan-dosen","ai-kengen","buppan-kengen"];
+var allTabs=["irai","kaijo","kanryo","ai-dosen","buppan-dosen","ai-kengen","buppan-kengen"];
 document.querySelectorAll(".tab").forEach(function(t,i){
 if(allTabs[i]==="irai"){t.classList.remove("active");if(id==="irai"){t.classList.add("active");t.classList.add("is-pressed")}else{t.classList.remove("is-pressed")}t.style.background="var(--green)";t.style.color="#fff"}
 else if(allTabs[i]==="kaijo"){t.classList.remove("active");if(id==="kaijo"){t.classList.add("active");t.classList.add("is-pressed")}else{t.classList.remove("is-pressed")}t.style.background="var(--red)";t.style.color="#fff"}
+else if(allTabs[i]==="kanryo"){t.classList.remove("active");if(id==="kanryo"){t.classList.add("active");t.classList.add("is-pressed")}else{t.classList.remove("is-pressed")}t.style.background="#2980b9";t.style.color="#fff"}
 else{t.classList.toggle("active",allTabs[i]===id)}
 });
 document.querySelectorAll(".panel").forEach(function(p){p.classList.remove("active")});
 document.getElementById("panel-"+id).classList.add("active");
 if(SHEETS[id]&&!document.getElementById("panel-"+id).dataset.loaded){loadSheet(id)}
+if(id==="kanryo"&&!window._kanryoLoaded){window._kanryoLoaded=true;loadKanryoMembers()}
 }
 function loadSheet(key){
 var s=SHEETS[key];
@@ -473,6 +496,59 @@ removeBtn.onclick=function(){row.remove()};
 row.appendChild(input);
 row.appendChild(removeBtn);
 list.appendChild(row);
+}
+var KANRYO_ROOM_ID="439472889";
+var kanryoMembers=[];
+var kanryoSelected=null;
+function loadKanryoMembers(){
+var box=document.getElementById("kanryoMemberList");
+box.textContent="読み込み中...";
+fetch(GAS_URL+"?action=members&roomId="+KANRYO_ROOM_ID,{method:"GET"})
+.then(function(r){return r.json()})
+.then(function(data){
+if(!data||!data.members){box.textContent="メンバーを取得できませんでした";return}
+kanryoMembers=data.members;renderKanryoMembers(kanryoMembers);
+})
+.catch(function(){box.textContent="メンバーの取得に失敗しました（GAS側の設定をご確認ください）"});
+}
+function renderKanryoMembers(list){
+var box=document.getElementById("kanryoMemberList");
+if(!list.length){box.textContent="該当するメンバーがいません";return}
+box.innerHTML="";
+list.forEach(function(m){
+var item=document.createElement("div");
+item.className="kanryo-member-item"+(kanryoSelected&&kanryoSelected.account_id===m.account_id?" selected":"");
+item.textContent=m.name;
+item.onclick=function(){selectKanryoMember(m)};
+box.appendChild(item);
+});
+}
+function selectKanryoMember(m){
+kanryoSelected=m;
+document.getElementById("kanryoSelectedName").textContent=m.name;
+renderKanryoMembers(kanryoMembers.filter(filterMatch));
+}
+var _kanryoQuery="";
+function filterMatch(m){return m.name.indexOf(_kanryoQuery)>=0}
+function filterKanryoMembers(){
+_kanryoQuery=document.getElementById("kanryoMemberSearch").value.trim();
+renderKanryoMembers(kanryoMembers.filter(filterMatch));
+}
+function submitKanryo(){
+if(!kanryoSelected){showToast("メンション対象者を選択してください","error");return}
+var btn=document.getElementById("kanryoSubmitBtn");
+var mention="[To:"+kanryoSelected.account_id+"] "+kanryoSelected.name+"\n";
+var msg=mention+"【完了】\n\nオプチャ権限付与完了しました！\n\n@All機能・王冠マークが表示されるか確認お願いします！";
+showConfirmPopup(function(){
+btn.disabled=true;btn.textContent="送信中...";
+fetch(GAS_URL,{method:"POST",headers:{"Content-Type":"text/plain"},body:JSON.stringify({message:msg,roomId:KANRYO_ROOM_ID}),mode:"no-cors"})
+.then(function(){showToast("完了報告を送信しました！");
+kanryoSelected=null;document.getElementById("kanryoSelectedName").textContent="なし";
+document.getElementById("kanryoMemberSearch").value="";_kanryoQuery="";renderKanryoMembers(kanryoMembers);
+})
+.catch(function(e){showToast("送信に失敗しました: "+e.message,"error")})
+.finally(function(){btn.disabled=false;btn.textContent="📮 完了報告を送信（＋Chatwork通知）"});
+});
 }
 function submitRequest(){
 var requester=document.getElementById("requester").value.trim();
